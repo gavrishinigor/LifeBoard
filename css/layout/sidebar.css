@@ -1,0 +1,96 @@
+.layout {
+  display: flex;
+  height: calc(100vh - 72px); /* если высота header примерно 72px */
+}
+
+.sidebar {
+  width: 220px;
+  background-color: #1f2937; /* тёмно-серый */
+  color: white;
+  padding: 24px 16px;
+}
+
+.nav-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.nav-item {
+  cursor: pointer;
+  font-size: 16px;
+  padding: 8px;
+  border-radius: 4px;
+  transition: background-color 0.2s ease;
+}
+
+.nav-item:hover {
+  background-color: #374151; /* немного светлее */
+}
+
+.content {
+  flex-grow: 1;
+  padding: 32px;
+  background-color: #f9fafb;
+}
+
+.layout {
+  display: grid;
+  grid-template-areas:
+    "header header"
+    "sidebar content";
+  grid-template-columns: 220px 1fr;
+  grid-template-rows: 72px 1fr;
+  height: 100vh;
+}
+
+header {
+  grid-area: header;
+}
+
+.sidebar {
+  grid-area: sidebar;
+}
+
+.content {
+  grid-area: content;
+}
+
+.nav-item.active {
+  background-color: #4f46e5;
+  color: white;
+}
+
+@media (max-width: 768px) {
+  .sidebar {
+    position: absolute;
+    left: -220px;
+    top: 72px;
+    height: calc(100% - 72px);
+    transition: left 0.3s ease;
+    z-index: 100;
+  }
+
+  .sidebar.open {
+    left: 0;
+  }
+
+  .layout {
+    display: block;
+  }
+
+  .content {
+    padding: 24px;
+  }
+}
+
+@media (max-width: 360px) {
+  .sidebar {
+    width: 180px;
+  }
+
+  .nav-item {
+    font-size: 14px;
+    padding: 6px;
+  }
+}
