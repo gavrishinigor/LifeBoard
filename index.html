@@ -4,16 +4,20 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>LifeBoard</title>
-  <link rel="stylesheet" href="css/global/reset.css" />
-  <link rel="stylesheet" href="css/layout/header.css" />
-  <link rel="stylesheet" href="css/layout/sidebar.css" />
-  <link rel="stylesheet" href="css/main.css" />
-  <link rel="stylesheet" href="css/sections/tasks.css" />
+  <link rel="stylesheet" href="css/global/reset.css">
+<link rel="stylesheet" href="css/layout/header.css">
+<link rel="stylesheet" href="css/layout/sidebar.css">
+<link rel="stylesheet" href="css/sections/tasks.css">
+<link rel="stylesheet" href="css/sections/statistics.css">
+<link rel="stylesheet" href="css/main.css">
 
-  <script src="js/sections/tasks.js" defer></script>
-  <script src="js/layout/header.js" defer></script>
-  <script src="js/layout/sidebar.js" defer></script>
-  <script src="js/main.js" defer></script>
+<!-- Скрипты -->
+<script src="js/layout/header.js" defer></script>
+<script type="module" src="js/layout/sidebar.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script type="module" src="js/sections/statistics.js"></script>
+<script src="js/main.js" defer></script>
+
 
 </head>
 
@@ -38,7 +42,7 @@
         <ul class="nav-list">
           <li class="nav-item" data-section="dashboard">🏠 Главная</li>
           <li class="nav-item" data-section="tasks">📅 Задачи</li>
-          <li class="nav-item" data-section="stats">📊 Статистика</li>
+          <li class="nav-item" data-section="statistics">📊 Статистика</li>
           <li class="nav-item" data-section="settings">⚙️ Настройки</li>
         </ul>
       </nav>

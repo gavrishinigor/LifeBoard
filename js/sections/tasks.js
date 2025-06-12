@@ -1,39 +1,63 @@
-document.addEventListener("DOMContentLoaded", () => {
+let tasks = JSON.parse(localStorage.getItem("tasks")) || [];
+let currentFilter = "all";
+
+export function initTasksSection() {
   const content = document.querySelector(".content");
-  let tasks = JSON.parse(localStorage.getItem("tasks")) || [];
+  const form = content.querySelector(".task-form");
+  const input = content.querySelector(".task-input");
+  const list = content.querySelector(".task-list");
+  const filterButtons = content.querySelectorAll(".filter-btn");
+  const clearBtn = content.querySelector(".clear-all-btn");
 
-  // Слежение за вставкой формы задач
-    const observeTasks = new MutationObserver((mutations, observer) => {    const form = content.querySelector(".task-form");
-    const input = content.querySelector(".task-input");
-    const list = content.querySelector(".task-list");
+  if (!form || !input || !list) return;
 
-    if (!form || !input || !list) return;
+  renderTasks(list);
 
-    // Отрисовываем задачи
+  form.addEventListener("submit", (e) => {
+    e.preventDefault();
+    const text = input.value.trim();
+    if (text === "") return;
+
+    const newTask = {
+      text,
+      completed: false,
+      createdAt: new Date().toISOString()
+    };
+    tasks.push(newTask);
+    localStorage.setItem("tasks", JSON.stringify(tasks));
+
     renderTasks(list);
-
-    // Добавление задачи
-    form.addEventListener("submit", (e) => {
-      e.preventDefault();
-      const text = input.value.trim();
-      if (text === "") return;
-
-      const newTask = { text, completed: false };
-      tasks.push(newTask);
-      localStorage.setItem("tasks", JSON.stringify(tasks));
-
-      renderTasks(list);
-      input.value = "";
-    });
-    observer.disconnect(); // ❗️Останавливаем наблюдение
+    input.value = "";
   });
 
-  observeTasks.observe(content, { childList: true, subtree: true });
+  filterButtons.forEach(btn => {
+    btn.addEventListener("click", () => {
+      filterButtons.forEach(b => b.classList.remove("active"));
+      btn.classList.add("active");
+      currentFilter = btn.dataset.filter;
+      renderTasks(list);
+    });
+  });
 
-  // 👉 Отдельно, вне observer:
+  if (clearBtn) {
+    clearBtn.addEventListener("click", () => {
+      if (confirm("Удалить все задачи?")) {
+        tasks = [];
+        localStorage.removeItem("tasks");
+        renderTasks(list);
+      }
+    });
+  }
+
   function renderTasks(list) {
     list.innerHTML = "";
-    tasks.forEach((task, index) => {
+    const filteredTasks = tasks.filter(task => {
+      if (currentFilter === "active") return !task.completed;
+      if (currentFilter === "completed") return task.completed;
+      return true;
+    });
+
+    filteredTasks.forEach((task, index) => {
       const li = document.createElement("li");
       li.classList.add("task-item");
 
@@ -68,4 +92,4 @@ document.addEventListener("DOMContentLoaded", () => {
       list.appendChild(li);
     });
   }
-});
+}
