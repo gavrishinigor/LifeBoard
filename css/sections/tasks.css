@@ -2,6 +2,9 @@
   display: flex;
   flex-direction: column;
   gap: 16px;
+  max-width: 800px;
+  width: 100%;
+  margin: 0 auto;
 }
 
 .task-form {
@@ -13,18 +16,22 @@
   flex-grow: 1;
   padding: 10px;
   font-size: 16px;
+  font-family: inherit;
   border: 1px solid #d1d5db;
   border-radius: 4px;
+  box-sizing: border-box;
 }
 
 .task-add-btn {
   padding: 10px 16px;
+  font-family: inherit;
   background-color: #4f46e5;
   color: white;
   border: none;
   border-radius: 4px;
   cursor: pointer;
   transition: background-color 0.2s ease;
+  box-sizing: border-box;
 }
 
 .task-add-btn:hover {
@@ -39,13 +46,27 @@
 }
 
 .task-list li {
+  display: flex;
+  align-items: center;
+  gap: 12px;
   padding: 12px;
   background-color: white;
   border-radius: 4px;
   border: 1px solid #e5e7eb;
+  animation: fadeIn 0.3s ease;
 }
 
-  /* 📱 Адаптив: маленькие экраны (Galaxy Fold, iPhone SE и т.д.) */
+.task-list li span {
+  word-break: break-word;
+  flex: 1;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* 📱 Адаптив: маленькие экраны */
 @media (max-width: 420px) {
   .tasks-section {
     padding: 0 12px;
@@ -60,6 +81,7 @@
   .task-add-btn {
     width: 100%;
     font-size: 16px;
+    box-sizing: border-box;
   }
 
   .task-filters {
@@ -72,12 +94,6 @@
     width: 100%;
     font-size: 14px;
   }
-}
-
-.task-item {
-  display: flex;
-  align-items: center;
-  gap: 12px;
 }
 
 .task-checkbox {

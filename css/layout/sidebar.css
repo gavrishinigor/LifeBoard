@@ -1,11 +1,21 @@
 .layout {
-  display: flex;
-  height: calc(100vh - 72px); /* если высота header примерно 72px */
+  display: grid;
+  grid-template-areas:
+    "header header"
+    "sidebar content";
+  grid-template-columns: 220px 1fr;
+  grid-template-rows: 72px 1fr;
+  height: 100vh;
+}
+
+header {
+  grid-area: header;
 }
 
 .sidebar {
+  grid-area: sidebar;
   width: 220px;
-  background-color: #1f2937; /* тёмно-серый */
+  background-color: #1f2937;
   color: white;
   padding: 24px 16px;
 }
@@ -25,35 +35,7 @@
 }
 
 .nav-item:hover {
-  background-color: #374151; /* немного светлее */
-}
-
-.content {
-  flex-grow: 1;
-  padding: 32px;
-  background-color: #f9fafb;
-}
-
-.layout {
-  display: grid;
-  grid-template-areas:
-    "header header"
-    "sidebar content";
-  grid-template-columns: 220px 1fr;
-  grid-template-rows: 72px 1fr;
-  height: 100vh;
-}
-
-header {
-  grid-area: header;
-}
-
-.sidebar {
-  grid-area: sidebar;
-}
-
-.content {
-  grid-area: content;
+  background-color: #374151;
 }
 
 .nav-item.active {
@@ -61,7 +43,18 @@ header {
   color: white;
 }
 
+.content {
+  grid-area: content;
+  padding: 32px;
+  background-color: #f9fafb;
+  overflow-y: auto;
+}
+
 @media (max-width: 768px) {
+  .layout {
+    display: block;
+  }
+
   .sidebar {
     position: absolute;
     left: -220px;
@@ -73,10 +66,6 @@ header {
 
   .sidebar.open {
     left: 0;
-  }
-
-  .layout {
-    display: block;
   }
 
   .content {

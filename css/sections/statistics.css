@@ -1,8 +1,12 @@
 .statistics-section {
   padding: 24px;
+  max-width: 100%;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 #statsChart {
-  max-width: 100%;
-  height: auto;
+  width: 100%;
+  min-height: 200px;
+  max-height: 400px;
 }

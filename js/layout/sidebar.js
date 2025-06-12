@@ -6,13 +6,14 @@ document.addEventListener("DOMContentLoaded", () => {
 
   navItems.forEach(item => {
     item.addEventListener("click", () => {
-      // Снимаем активный класс со всех
+      // 1. Активное меню
       navItems.forEach(el => el.classList.remove("active"));
       item.classList.add("active");
 
-      // Обновляем контент 
+      // 2. Определение раздела
       const section = item.dataset.section;
 
+      // 3. Обработка задач
       if (section === "tasks") {
         content.innerHTML = `
           <section class="tasks-section">
@@ -29,22 +30,28 @@ document.addEventListener("DOMContentLoaded", () => {
             </div>
             <ul class="task-list"></ul>
           </section>
-        `; 
-        initTasksSection(); // ⬅️ запуск логики
-        } else if (section === "statistics") {
-  content.innerHTML = `
-    <section class="statistics-section">
-      <h1>Статистика задач</h1>
-      <canvas id="statsChart"></canvas>
-    </section>
-  `;
+        `;
+        initTasksSection(); // ⬅️ Запуск логики задач
+      }
 
-      } else {
+      // 4. Обработка статистики
+      else if (section === "statistics") {
+        content.innerHTML = `
+          <section class="statistics-section">
+            <h1>Статистика задач</h1>
+            <canvas id="statsChart"></canvas>
+          </section>
+        `;
+        // ❗ НЕ ЗАБУДЬ: подключён ли у тебя initStatisticsChart()? Если не вызывается — статистика не появится!
+        // Можно добавить import и вызвать здесь, если не подключается автоматически
+      }
+
+      // 5. Остальные разделы
+      else {
         content.innerHTML = `<h1>Раздел: ${section}</h1>`;
       }
 
-
-      // ⛔ Закрываем меню на мобильных
+      // 6. Закрытие меню на мобилках
       const sidebar = document.querySelector(".sidebar");
       if (window.innerWidth <= 768) {
         sidebar.classList.remove("open");

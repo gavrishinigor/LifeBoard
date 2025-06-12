@@ -5,12 +5,14 @@ header {
   justify-content: space-between;
   align-items: center;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  position: relative; /* добавлено */
+  z-index: 10;         /* добавлено */
 }
 
 .logo {
   font-size: 20px;
   font-weight: bold;
-  color: #4f46e5; /* синий цвет, близкий к indigo-600 */
+  color: #4f46e5;
 }
 
 .header-right {
@@ -21,14 +23,14 @@ header {
 
 .page-title {
   font-size: 14px;
-  color: #6b7280; /* серый оттенок */
+  color: #6b7280;
 }
 
 .avatar-placeholder {
   width: 32px;
   height: 32px;
   border-radius: 50%;
-  background-color: #d1d5db; /* светло-серый */
+  background-color: #d1d5db;
 }
 
 .menu-toggle {

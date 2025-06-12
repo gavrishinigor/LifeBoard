@@ -1,7 +1,7 @@
-let tasks = JSON.parse(localStorage.getItem("tasks")) || [];
-let currentFilter = "all";
-
 export function initTasksSection() {
+  let tasks = JSON.parse(localStorage.getItem("tasks")) || [];
+  let currentFilter = "all";
+
   const content = document.querySelector(".content");
   const form = content.querySelector(".task-form");
   const input = content.querySelector(".task-input");
@@ -11,7 +11,7 @@ export function initTasksSection() {
 
   if (!form || !input || !list) return;
 
-  renderTasks(list);
+  renderTasks();
 
   form.addEventListener("submit", (e) => {
     e.preventDefault();
@@ -26,7 +26,7 @@ export function initTasksSection() {
     tasks.push(newTask);
     localStorage.setItem("tasks", JSON.stringify(tasks));
 
-    renderTasks(list);
+    renderTasks();
     input.value = "";
   });
 
@@ -35,7 +35,7 @@ export function initTasksSection() {
       filterButtons.forEach(b => b.classList.remove("active"));
       btn.classList.add("active");
       currentFilter = btn.dataset.filter;
-      renderTasks(list);
+      renderTasks();
     });
   });
 
@@ -43,14 +43,15 @@ export function initTasksSection() {
     clearBtn.addEventListener("click", () => {
       if (confirm("Удалить все задачи?")) {
         tasks = [];
-        localStorage.removeItem("tasks");
-        renderTasks(list);
+        localStorage.setItem("tasks", JSON.stringify(tasks));
+        renderTasks();
       }
     });
   }
 
-  function renderTasks(list) {
+  function renderTasks() {
     list.innerHTML = "";
+
     const filteredTasks = tasks.filter(task => {
       if (currentFilter === "active") return !task.completed;
       if (currentFilter === "completed") return task.completed;
@@ -78,12 +79,13 @@ export function initTasksSection() {
         task.completed = checkbox.checked;
         span.classList.toggle("completed", task.completed);
         localStorage.setItem("tasks", JSON.stringify(tasks));
+        renderTasks(); // добавляем перерисовку
       });
 
       deleteBtn.addEventListener("click", () => {
-        tasks.splice(index, 1);
+        tasks.splice(tasks.indexOf(task), 1); // <-- вместо index по позиции объекта
         localStorage.setItem("tasks", JSON.stringify(tasks));
-        renderTasks(list);
+        renderTasks();
       });
 
       li.appendChild(checkbox);
